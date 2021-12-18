@@ -122,7 +122,7 @@ for (let [key, value] of user) {
 ```
 ````
 
-```smart header="交换变量值的技巧"
+````smart header="交换变量值的技巧"
 一个用于交换变量值的典型技巧：
 
 ```js run
@@ -138,6 +138,7 @@ alert(`${guest} ${admin}`); // Pete Jane（成功交换！）
 这里我们创建了一个由两个变量组成的临时数组，并且立即以交换了的顺序对其进行了解构。
 
 我们可以用这种方式交换两个以上的变量。
+````
 
 
 ### 剩余的 '...'
@@ -293,7 +294,7 @@ let {width = prompt("width?"), title = prompt("title?")} = options;
 */!*
 
 alert(title);  // Menu
-alert(width);  //（无论 prompt 的结果是什么）
+alert(width);  // (prompt 的返回值)
 ```
 
 我们还可以将冒号和等号结合起来：

@@ -9,7 +9,7 @@
 
 ## “script” 标签
 
-JavaScript 程序可以在 `<script>` 标签的帮助下插入到 HTML 文档的任何地方。
+我们几乎可以使用 `<script>` 标签将 JavaScript 程序插入到 HTML 文档的任何位置。
 
 比如：
 
@@ -73,7 +73,7 @@ JavaScript 程序可以在 `<script>` 标签的帮助下插入到 HTML 文档的
 <script src="/path/to/script.js"></script>
 ```
 
-这里，`/path/to/script.js` 是脚本文件从网站根目录开始的绝对路径。当然也可以提供当前页面的相对路径。例如，`src ="script.js"` 表示当前文件夹中的 `"script.js"` 文件。
+这里，`/path/to/script.js` 是脚本文件从网站根目录开始的绝对路径。当然也可以提供当前页面的相对路径。例如，`src ="script.js"`，就像 `src="./script.js"`，表示当前文件夹中的 `"script.js"` 文件。
 
 我们也可以提供一个完整的 URL 地址，例如：
 

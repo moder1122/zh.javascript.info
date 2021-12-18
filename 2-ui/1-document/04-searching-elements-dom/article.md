@@ -174,7 +174,7 @@ CSS 选择器的伪类，例如 `:hover` 和 `:active` 也都是被支持的。�
 
 如今，它们大多已经成为了历史，因为 `querySelector` 功能更强大，写起来更短。
 
-因此，这里我们介绍它们只是为了完整起见，而你仍然可以在就脚本中找到这些方法。
+因此，这里我们介绍它们只是为了完整起见，而你仍然可以在旧脚本中找到这些方法。
 
 - `elem.getElementsByTagName(tag)` 查找具有给定标签的元素，并返回它们的集合。`tag` 参数也可以是对于“任何标签”的星号 `"*"`。
 - `elem.getElementsByClassName(className)` 返回具有给定CSS类的元素。
@@ -312,15 +312,15 @@ document.getElementsByTagName('input')[0].value = 5;
 
 ## 总结
 
-有 6 种主要的方法，可以在 DOM 中搜素节点：
+有 6 种主要的方法，可以在 DOM 中搜索元素节点：
 
 <table>
 <thead>
 <tr>
-<td>Method</td>
-<td>Searches by...</td>
-<td>Can call on an element?</td>
-<td>Live?</td>
+<td>方法名</td>
+<td>搜索方式</td>
+<td>可以在元素上调用？</td>
+<td>实时的？</td>
 </tr>
 </thead>
 <tbody>

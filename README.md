@@ -17,13 +17,13 @@
 
 | 微信扫码关注官方订阅号，订阅更多精彩内容 |
 |-|
-| <img src="https://user-images.githubusercontent.com/26959437/103863030-125c8a00-50fb-11eb-8dcb-7ce7d179e81a.png" width="500px;" /> |
-| <img src="https://user-images.githubusercontent.com/26959437/103863019-0c66a900-50fb-11eb-88eb-e9b67c548754.png" width="500px;" /> |
+| <img src="https://user-images.githubusercontent.com/26959437/120764347-a3b91680-c54a-11eb-9a15-31bb2596b0db.png" width="500px;" /> |
+| <img src="https://user-images.githubusercontent.com/26959437/120764353-a61b7080-c54a-11eb-8a79-75177c342b45.png" width="500px;" /> |
 
 **加入读者交流群：**
 
 - **微信群**：加微信 **`imleviding`** 或 [扫二维码](https://user-images.githubusercontent.com/26959437/64596211-0fa63380-d3e6-11e9-983d-bd788ffe2370.jpg)，验证信息填写 **`JS 教程`**。
-- **QQ 群**：打开 QQ 搜索群号 **`866757202`** 或 [扫二维码](https://user-images.githubusercontent.com/26959437/64609229-12f9e900-d3ff-11e9-96e8-147335f5e264.jpg)，验证信息填写 **`JS 教程`**。
+- **QQ 群**：打开 QQ 搜索群号 **`955916282`** 或 [扫二维码](https://user-images.githubusercontent.com/26959437/138594800-29700a46-0cb1-45bd-b614-4b6486cf0124.jpg)，验证信息填写 **`JS 教程`**。
 
 教程配套每日一题：https://github.com/leviding/one-note-a-day
 

@@ -24,11 +24,11 @@ JavaScript 在刚诞生的时候，它的名字叫 "LiveScript"。但是因为�
 
 不同的引擎有不同的“代号”，例如：
 
-- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) —— Chrome 和 Opera 中的 JavaScript 引擎。
+- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) —— Chrome、Opera 和 Edge 中的 JavaScript 引擎。
 - [SpiderMonkey](https://en.wikipedia.org/wiki/SpiderMonkey) —— Firefox 中的 JavaScript 引擎。
-- ……还有其他一些代号，像 "Chakra" 用于 IE，"ChakraCore" 用于 Microsoft Edge，"Nitro" 和 "SquirrelFish" 用于 Safari，等等。
+- ……还有其他一些代号，像 "Chakra" 用于 IE，"JavaScriptCore"、"Nitro" 和 "SquirrelFish" 用于 Safari，等等。
 
-上面这些术语很容易记住，因为它们经常出现在开发者的文章中。我们也会用到这些术语。例如，如果“V8 支持某个功能”，那么我们可以认为这个功能大概能在 Chrome 和 Opera 中正常运行。
+上面这些术语很容易记住，因为它们经常出现在开发者的文章中。我们也会用到这些术语。例如，如果“V8 支持某个功能”，那么我们可以认为这个功能大概能在 Chrome、Opera 和 Edge 中正常运行。
 
 ```smart header="引擎是如何工作的？"
 
@@ -110,12 +110,13 @@ JavaScript 是将这三件事结合在一起的唯一的浏览器技术。
 - [TypeScript](http://www.typescriptlang.org/) 专注于添加“严格的数据类型”以简化开发，以更好地支持复杂系统的开发。由微软开发。
 - [Flow](http://flow.org/) 也添加了数据类型，但是以一种不同的方式。由 Facebook 开发。
 - [Dart](https://www.dartlang.org/) 是一门独立的语言。它拥有自己的引擎，该引擎可以在非浏览器环境中运行（例如手机应用），它也可以被编译成 JavaScript。由 Google 开发。
-- [Brython](https://brython.info/) 是一个 Python 的 JavaScript 编译器，可以在不使用 JavaScript 的情况下，以纯 Python 编写应用程序。
+- [Brython](https://brython.info/) 是一个 Python 到 JavaScript 的转译器，让我们可以在不使用 JavaScript 的情况下，以纯 Python 编写应用程序。
+- [Kotlin](https://kotlinlang.org/docs/reference/js-overview.html) 是一个现代、简洁且安全的编程语言，编写出的应用程序可以在浏览器和 Node 环境中运行。
 
 这样的语言还有很多。当然，即使我们在使用此类编译语言，我们也需要了解 JavaScript。因为了解 JavaScript 才能让我们真正明白我们在做什么。
 
 ## 总结
 
 - JavaScript 最开始是专门为浏览器设计的一门语言，但是现在也被用于很多其他的环境。
-- 如今，JavaScript 已经成为了与 HTML/CSS 完全集成的，使用最广泛的浏览器语言。
+- JavaScript 作为被应用最广泛的浏览器语言，且与 HTML/CSS 完全集成，具有独特的地位。
 - 有很多其他的语言可以被“编译”成 JavaScript，这些语言还提供了更多的功能。建议最好了解一下这些语言，至少在掌握了 JavaScript 之后大致的了解一下。

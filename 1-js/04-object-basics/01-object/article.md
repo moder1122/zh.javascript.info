@@ -92,30 +92,6 @@ let user = {
 ```
 这叫做尾随（trailing）或悬挂（hanging）逗号。这样便于我们添加、删除和移动属性，因为所有的行都是相似的。
 
-````smart header="使用 const 声明的对象是可以被修改的"
-请注意：用 `const` 声明的对象 **能** 被修改。
-
-例如：
-
-```js run
-const user = {
-  name: "John"
-};
-
-*!*
-user.name = "Pete"; // (*)
-*/!*
-
-alert(user.name); // Pete
-```
-
-`(*)` 行似乎会触发一个错误，但实际并没有。`const` 声明仅固定了 `user` 的值，而不是值（该对象）里面的内容。
-
-仅当我们尝试将 `user=...` 作为一个整体进行赋值时，`const` 会抛出错误。
-
-有另一种将对象属性变为常量的方式，我们将在后面的 <info:property-descriptors> 一章中学习它。
-````
-
 ## 方括号
 
 对于多词属性，点操作就不能用了：
@@ -451,7 +427,7 @@ for(let code in codes) {
 所以，"49" 是一个整数属性名，因为我们把它转换成整数，再转换回来，它还是一样的。但是 "+49" 和 "1.2" 就不行了：
 
 ```js run
-// Math.trunc 是内置的去除小数部分的方法。
+// Math.trunc 是内建的去除小数部分的方法。
 alert( String(Math.trunc(Number("49"))) ); // "49"，相同，整数属性
 alert( String(Math.trunc(Number("+49"))) ); // "49"，不同于 "+49" ⇒ 不是整数属性
 alert( String(Math.trunc(Number("1.2"))) ); // "1"，不同于 "1.2" ⇒ 不是整数属性
