@@ -24,11 +24,11 @@
 
 1. 首先，创建一个文件 id，以唯一地标识我们要上传的文件：
     ```js
-    let fileId = file.name + '-' + file.size + '-' + +file.lastModifiedDate;
+    let fileId = file.name + '-' + file.size + '-' + file.lastModified;
     ```
     在恢复上传时需要用到它，以告诉服务器我们要恢复的内容。
 
-    如果名称，或大小，或最后一次修改事件发生了更改，则将有另一个 `fileId`。
+    如果名称，或大小，或最后一次修改时间发生了更改，则将有另一个 `fileId`。
 
 2. 向服务器发送一个请求，询问它已经有了多少字节，像这样：
     ```js

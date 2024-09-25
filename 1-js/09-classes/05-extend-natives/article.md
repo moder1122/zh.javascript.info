@@ -21,7 +21,7 @@ alert(filteredArr); // 10, 50
 alert(filteredArr.isEmpty()); // false
 ```
 
-请注意一个非常有趣的事儿。内建的方法例如 `filter`，`map` 等 — 返回的正是子类 `PowerArray` 的新对象。它们内部使用了对象的 `constructor` 属性来实现这一功能。
+请注意一个非常有趣的事儿。内建的方法例如 `filter`，`map` 等 —— 返回的正是子类 `PowerArray` 的新对象。它们内部使用了对象的 `constructor` 属性来实现这一功能。
 
 在上面的例子中，
 ```js
@@ -32,7 +32,7 @@ arr.constructor === PowerArray
 
 甚至，我们可以定制这种行为。
 
-我们可以给这个类添加一个特殊的静态 getter `Symbol.species`。如果存在，则应返回 JavaScript 在内部用来在 `map` 和 `filter` 等方法中创建新实体的 `constructor`。
+我们可以给这个类添加一个特殊的静态 getter `Symbol.species`，它会返回 JavaScript 在内部用来在 `map` 和 `filter` 等方法中创建新实体的 `constructor`。
 
 如果我们希望像 `map` 或 `filter` 这样的内建方法返回常规数组，我们可以在 `Symbol.species` 中返回 `Array`，就像这样：
 

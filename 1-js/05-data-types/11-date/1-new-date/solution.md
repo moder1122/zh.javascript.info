@@ -12,7 +12,7 @@ alert( d1 );
 我们还可以从字符串创建日期，像这样：
 
 ```js run
-// new Date(datastring)
-let d2 = new Date("February 20, 2012 03:12:00");
+// new Date(datestring)
+let d2 = new Date("2012-02-20T03:12");
 alert( d2 );
 ```

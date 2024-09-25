@@ -133,6 +133,10 @@
 <script async src="https://google-analytics.com/analytics.js"></script>
 ```
 
+```smart header="`async` 特性仅适用于外部脚本"
+就像 `defer` 一样，如果 `<script>` 标签没有 `src` 特性（attribute），那么 `async` 特性会被忽略。
+```
+
 ## 动态脚本
 
 此外，还有一种向页面添加脚本的重要的方式。
@@ -193,7 +197,7 @@ loadScript("/article/script-async-defer/small.js");
 `async` 用于独立脚本，例如计数器或广告，这些脚本的相对执行顺序无关紧要。
 
 ```warn header="没有脚本的页面应该也是可用的"
-请注意：如果你使用的是 `defer` 或 `async`，那么用于将在脚本加载完成 **之前** 先看到页面。
+请注意：如果你使用的是 `defer` 或 `async`，那么用户将在脚本加载完成 **之前** 先看到页面。
 
 在这种情况下，某些图形组件可能尚未初始化完成。
 

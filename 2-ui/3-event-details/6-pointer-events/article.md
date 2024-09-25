@@ -126,7 +126,7 @@
 这里的问题就在于浏览器”劫持“了这一个互动操作：在“拖放”过程开始时触发了 `pointercancel` 事件，并且不再有 `pointermove` 事件会被生成。
 
 ```online
-这里是拖放示例的演示，并且在拖放过程中，指针事件（只包含 `up/down`、`move` 和 `cancel）的触发会被记录在 `textarea` 中：
+这里是拖放示例的演示，并且在拖放过程中，指针事件（只包含 `up/down`、`move` 和 `cancel`）的触发会被记录在 `textarea` 中：
 
 [iframe src="ball" height=240 edit]
 ```
@@ -269,7 +269,7 @@ thumb.onpointerdown = function(event) {
 
 指针事件是鼠标事件的拓展。我们可以在事件名称中用 `pointer` 替换 `mouse` 来让我们的代码既能继续支持鼠标，也能更好地支持其他类型的设备。
 
-对于浏览器可能会决定进行劫持并自行处理的拖放和复杂的触控交互 —— 请记住取消事件的默认操作，并在 CSS 中为涉及到的元素设置 `touch-events: none`。
+对于浏览器可能会决定进行劫持并自行处理的拖放和复杂的触控交互 —— 请记住取消事件的默认操作，并在 CSS 中为涉及到的元素设置 `touch-action: none`。
 
 指针事件还额外具备以下能力：
 

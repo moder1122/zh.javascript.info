@@ -10,7 +10,7 @@
 但是，我们会尽全力使讲解变得更加清晰。在这儿不会有浏览器方面的真正复杂的东西。
 ```
 
-JavaScript 主机（host）环境提供了许多函数，这些函数允许我们计划 **异步** 行为（action）。换句话说，我们现在开始执行的行为，但它们会在稍后完成。
+JavaScript 主机（host）环境提供了许多函数，这些函数允许我们计划 **异步** 行为（action）—— 也就是在我们执行一段时间后才自行完成的行为。
 
 例如，`setTimeout` 函数就是一个这样的函数。
 
@@ -28,7 +28,7 @@ function loadScript(src) {
 }
 ```
 
-它将带有给定 `src` 的新动态创建的标签 `<script src="…">` 附加到文档中。浏览器将自动开始加载它，并在加载完成后执行。
+它将一个新的、带有给定 `src` 的、动态创建的标签 `<script src="…">` 插入到文档中。浏览器将自动开始加载它，并在加载完成后执行它。
 
 我们可以像这样使用这个函数：
 
@@ -77,6 +77,8 @@ function loadScript(src, *!*callback*/!*) {
 }
 ```
 
+`onload` 事件在 <info:onload-onerror#loading-a-script> 一文中有描述，它通常会在脚本加载和执行完成后执行一个函数。
+
 现在，如果我们想调用该脚本中的新函数，我们应该将其写在回调函数中：
 
 ```js
@@ -101,8 +103,8 @@ function loadScript(src, callback) {
 
 *!*
 loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', script => {
-  alert(`Cool, the script ${script.src} is loaded`);
-  alert( _ ); // 所加载的脚本中声明的函数
+  alert(`酷，脚本 ${script.src} 加载完成`);
+  alert( _ ); // _ 是所加载的脚本中声明的一个函数
 });
 */!*
 ```
@@ -120,18 +122,18 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', s
 ```js
 loadScript('/my/script.js', function(script) {
 
-  alert(`Cool, the ${script.src} is loaded, let's load one more`);
+  alert(`酷，脚本 ${script.src} 加载完成，让我们继续加载另一个吧`);
 
 *!*
   loadScript('/my/script2.js', function(script) {
-    alert(`Cool, the second script is loaded`);
+    alert(`酷，第二个脚本加载完成`);
   });
 */!*
 
 });
 ```
 
-在外部 `loadScript` 执行完成时，内部回调就会被回调。
+在外部 `loadScript` 执行完成时，回调就会发起内部的 `loadScript`。
 
 如果我们还想要一个脚本呢？
 
@@ -196,7 +198,7 @@ loadScript('/my/script.js', function(error, script) {
 
 ## 厄运金字塔
 
-乍一看，这是一种可行的异步编程方式。的确如此，对于一个或两个嵌套的调用看起来还不错。
+乍一看，它像是一种可行的异步编程方式。的确如此，对于一个或两个嵌套的调用看起来还不错。
 
 但对于一个接一个的多个异步行为，代码将会变成这样：
 
@@ -230,10 +232,10 @@ loadScript('1.js', function(error, script) {
 
 在上面这段代码中：
 1. 我们加载 `1.js`，如果没有发生错误。
-2. 我们加载 `2.js`，如果没有发生错误。
-3. 我们加载 `3.js`，如果没有发生错误 — 做其他操作 `(*)`。
+2. 我们加载 `2.js`，如果没有发生错误……
+3. 我们加载 `3.js`，如果没有发生错误 —— 做其他操作 `(*)`。
 
-如果调用嵌套的增加，代码层次变得更深，维护难度也随之增加，尤其是我们使用的是可能包含了很多循环和条件语句的真实代码，而不是例子中的 `...`。
+随着调用嵌套的增加，代码层次变得更深，维护难度也随之增加，尤其是我们使用的是可能包含了很多循环和条件语句的真实代码，而不是例子中的 `...`。
 
 有时这些被称为“回调地狱”或“厄运金字塔”。
 

@@ -27,7 +27,7 @@ let promise = fetch(url, [options])
 - **`url`** —— 要访问的 URL。
 - **`options`** —— 可选参数：method，header 等。
 
-没有 `options`，那就是一个简单的 GET 请求，下载 `url` 的内容。
+没有 `options`，这就是一个简单的 GET 请求，下载 `url` 的内容。
 
 浏览器立即启动请求，并返回一个该调用代码应该用来获取结果的 `promise`。
 
@@ -62,7 +62,7 @@ if (response.ok) { // 如果 HTTP 状态码为 200-299
 `Response` 提供了多种基于 promise 的方法，来以不同的格式访问 body：
 
 - **`response.text()`** —— 读取 response，并以文本形式返回 response，
-- **`response.json()`** —— 将 response 解析为 JSON，
+- **`response.json()`** —— 将 response 解析为 JSON 格式，
 - **`response.formData()`** —— 以 `FormData` 对象（在 [下一章](info:formdata) 有解释）的形式返回 response，
 - **`response.blob()`** —— 以 [Blob](info:blob)（具有类型的二进制数据）形式返回 response，
 - **`response.arrayBuffer()`** —— 以 [ArrayBuffer](info:arraybuffer-binary-arrays)（低级别的二进制数据）形式返回 response，
@@ -75,7 +75,7 @@ let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/c
 let response = await fetch(url);
 
 *!*
-let commits = await response.json(); // 读取 response body，并将其解析为 JSON
+let commits = await response.json(); // 读取 response body，并将其解析为 JSON 格式
 */!*
 
 alert(commits[0].author.login);
@@ -195,7 +195,7 @@ let response = fetch(protectedUrl, {
 - **`method`** —— HTTP 方法，例如 `POST`，
 - **`body`** —— request body，其中之一：
   - 字符串（例如 JSON 编码的），
-  - `FormData` 对象，以 `form/multipart` 形式发送数据，
+  - `FormData` 对象，以 `multipart/form-data` 形式发送数据，
   - `Blob`/`BufferSource` 发送二进制数据，
   - [URLSearchParams](info:url)，以 `x-www-form-urlencoded` 编码形式发送数据，很少使用。
 
@@ -304,7 +304,7 @@ fetch(url, options)
 获取 response body 的方法：
 - **`response.text()`** —— 读取 response，并以文本形式返回 response，
 - **`response.json()`** —— 将 response 解析为 JSON 对象形式，
-- **`response.formData()`** —— 以 `FormData` 对象（form/multipart 编码，参见下一章）的形式返回 response，
+- **`response.formData()`** —— 以 `FormData` 对象（`multipart/form-data` 编码，参见下一章）的形式返回 response，
 - **`response.blob()`** —— 以 [Blob](info:blob)（具有类型的二进制数据）形式返回 response，
 - **`response.arrayBuffer()`** —— 以 [ArrayBuffer](info:arraybuffer-binary-arrays)（低级别的二进制数据）形式返回 response。
 

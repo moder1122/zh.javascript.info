@@ -103,11 +103,11 @@ customElements.define('user-card', class extends HTMLElement {
 
 ……但是 "flattened" DOM 仅仅被创建用来渲染和事件处理，是“虚拟”的。虽然是渲染出来了，但文档中的节点事实上并没有到处移动！
 
-如果我们调用 `querySelector` 那就很容易验证：节点仍在它们的位置。
+如果我们调用 `querySelectorAll` 那就很容易验证：节点仍在它们的位置。
 
 ```js
 // light DOM <span> 节点位置依然不变，在 `<user-card>` 里
-alert( document.querySelector('user-card span').length ); // 2
+alert( document.querySelectorAll('user-card span').length ); // 2
 ```
 
 因此，扁平化 DOM 是通过插入插槽从 shadow DOM 派生出来的。浏览器渲染它并且用于样式继承、事件传播。但是 JavaScript 在扁平前仍按原样看到文档。
@@ -440,7 +440,7 @@ setTimeout(() => {
 - 如果同一插槽中有很多元素 - 它们会被一个接一个地添加。
 - `<slot>` 元素的内容作为备用。如果插槽没有 light 型的子元素，就会显示。
 
-在其槽内渲染插槽元素的过程称为“组合”。结果称为“扁平化 DOM”。
+在其插槽内渲染插槽元素的过程称为“组合”。结果称为“扁平化 DOM”。
 
 组合不会真实的去移动节点，从 JavaScript 的视角看 DOM 仍然是相同的。
 

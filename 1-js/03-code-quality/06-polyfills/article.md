@@ -7,7 +7,7 @@ JavaScript 引擎背后的团队关于首先要实现什么有着他们自己想
 
 因此，一个 JavaScript 引擎只能实现标准中的一部分是很常见的情况。
 
-查看语言特性的当前支持状态的一个很好的页面是 <https://kangax.github.io/compat-table/es6/>（它很大，我们现在还有很多东西要学）。
+查看语言特性的当前支持状态的一个很好的页面是 <https://compat-table.github.io/compat-table/es6/>（它很大，我们现在还有很多东西要学）。
 
 作为程序员，我们希望使用最新的特性。好东西越多越好！
 
@@ -42,7 +42,7 @@ height = (height !== undefined && height !== null) ? height : 100;
 
 说到名字，[Babel](https://babeljs.io) 是最著名的转译器之一。
 
-现代项目构建系统，例如 [webpack](http://webpack.github.io/)，提供了在每次代码更改时自动运行转译器的方法，因此很容易将代码转译集成到开发过程中。
+现代项目构建系统，例如 [webpack](https://webpack.js.org/)，提供了在每次代码更改时自动运行转译器的方法，因此很容易将代码转译集成到开发过程中。
 
 ## 垫片（Polyfills）
 
@@ -69,11 +69,10 @@ if (!Math.trunc) { // 如果没有这个函数
 }
 ```
 
-JavaScript 是一种高度动态的语言，脚本可以添加/修改任何函数，甚至包括内建函数。
+JavaScript 是一种高度动态的语言。脚本可以添加/修改任何函数，甚至包括内建函数。
 
 两个有趣的 polyfill 库：
 - [core js](https://github.com/zloirock/core-js) 支持了很多特性，允许只包含需要的特性。
-- [polyfill.io](http://polyfill.io) 提供带有 polyfill 的脚本的服务，具体取决于特性和用户的浏览器。
 
 
 ## 总结
@@ -82,10 +81,10 @@ JavaScript 是一种高度动态的语言，脚本可以添加/修改任何函�
 
 只是不要忘记使用转译器（如果使用现代语法或运算符）和 polyfill（添加可能缺少的特性）。它们将确保代码能正常工作。
 
-例如，以后熟悉了 JavaScript，你就可以搭建一个基于 [webpack](http://webpack.github.io/) 和 [babel-loader](https://github.com/babel/babel-loader) 插件的代码构建系统。
+例如，以后熟悉了 JavaScript，你就可以搭建一个基于 [webpack](https://webpack.js.org/) 和 [babel-loader](https://github.com/babel/babel-loader) 插件的代码构建系统。
 
 展示对各种特征的当前支持情况的工具：
-- <https://kangax.github.io/compat-table/es6/> —— 对于原生 JavaScript。
+- <https://compat-table.github.io/compat-table/es6/> —— 对于原生 JavaScript。
 - <https://caniuse.com/> —— 对于浏览器相关的函数。
 
 P.S. 谷歌的 Chrome 浏览器通常是对最新的语言特性的支持情况最好的浏览器，如果教程的示例运行失败，请尝试使用 Chrome 浏览器。不过，教程中的大多数示例都适用于任意的现代浏览器。

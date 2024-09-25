@@ -46,13 +46,15 @@ n = 12.345;
     alert( "not a number" / 2 ); // NaN，这样的除法是错误的
     ```
 
-    `NaN` 是粘性的。任何对 `NaN` 的进一步操作都会返回 `NaN`：
+    `NaN` 是粘性的。任何对 `NaN` 的进一步数学运算都会返回 `NaN`：
 
     ```js run
-    alert( "not a number" / 2 + 5 ); // NaN
+    alert( NaN + 1 ); // NaN
+    alert( 3 * NaN ); // NaN
+    alert( "not a number" / 2 - 1 ); // NaN
     ```
 
-    所以，如果在数学表达式中有一个 `NaN`，会被传播到最终结果。
+    所以，如果在数学表达式中有一个 `NaN`，会被传播到最终结果（只有一个例外：`NaN ** 0` 结果为 `1`）。
 
 ```smart header="数学运算是安全的"
 在 JavaScript 中做数学运算是安全的。我们可以做任何事：除以 0，将非数字字符串视为数字，等等。
@@ -66,9 +68,20 @@ n = 12.345;
 
 ## BigInt 类型 [#bigint-type]
 
-在 JavaScript 中，"number" 类型无法表示大于 <code>(2<sup>53</sup>-1)</code>（即 `9007199254740991`），或小于 <code>-(2<sup>53</sup>-1)</code> 的整数。这是其内部表示形式导致的技术限制。
+在 JavaScript 中，"number" 类型无法安全地表示大于 <code>(2<sup>53</sup>-1)</code>（即 `9007199254740991`），或小于 <code>-(2<sup>53</sup>-1)</code> 的整数。
 
-在大多数情况下，这个范围就足够了，但有时我们需要很大的数字，例如用于加密或微秒精度的时间戳。
+更准确的说，"number" 类型可以存储更大的整数（最多 <code>1.7976931348623157 * 10<sup>308</sup></code>），但超出安全整数范围 <code>±(2<sup>53</sup>-1)</code> 会出现精度问题，因为并非所有数字都适合固定的 64 位存储。因此，可能存储的是“近似值”。
+
+例如，这两个数字（正好超出了安全整数范围）是相同的：
+
+```js
+console.log(9007199254740991 + 1); // 9007199254740992
+console.log(9007199254740991 + 2); // 9007199254740992
+```
+
+也就是说，所有大于 <code>(2<sup>53</sup>-1)</code> 的奇数都不能用 "number" 类型存储。
+
+在大多数情况下，<code>±(2<sup>53</sup>-1)</code> 范围就足够了，但有时候我们需要整个范围非常大的整数，例如用于密码学或微秒精度的时间戳。
 
 `BigInt` 类型是最近被添加到 JavaScript 语言中的，用于表示任意长度的整数。
 
@@ -156,7 +169,7 @@ alert( isGreater ); // true（比较的结果是 "yes"）
 
 更详细的内容将会在 <info:logical-operators> 一节中介绍。
 
-## "null" 值
+## null 值
 
 特殊的 `null` 值不属于上述任何一种类型。
 
@@ -172,7 +185,7 @@ JavaScript 中的 `null` 仅仅是一个代表“无”、“空”或“值未�
 
 上面的代码表示 `age` 是未知的。
 
-## "undefined" 值
+## undefined 值
 
 特殊值 `undefined` 和 `null` 一样自成类型。
 
@@ -199,7 +212,7 @@ alert(age); // "undefined"
 
 ……但是不建议这样做。通常，使用 `null` 将一个“空”或者“未知”的值写入变量中，而 `undefined` 则保留作为未进行初始化的事物的默认初始值。
 
-## object 类型和 symbol 类型
+## Object 类型和 Symbol 类型
 
 `object` 类型是一个特殊的类型。
 
@@ -212,13 +225,6 @@ alert(age); // "undefined"
 ## typeof 运算符 [#type-typeof]
 
 `typeof` 运算符返回参数的类型。当我们想要分别处理不同类型值的时候，或者想快速进行数据类型检验时，非常有用。
-
-它支持两种语法形式：
-
-1. 作为运算符：`typeof x`。
-2. 函数形式：`typeof(x)`。
-
-换言之，有括号和没有括号，得到的结果是一样的。
 
 对 `typeof x` 的调用会以字符串的形式返回数据类型：
 
@@ -251,25 +257,37 @@ typeof alert // "function"  (3)
 最后三行可能需要额外的说明：
 
 1. `Math` 是一个提供数学运算的内建 `object`。我们会在 <info:number> 一节中学习它。此处仅作为一个 `object` 的示例。
-2. `typeof null` 的结果是 `"object"`。这是官方承认的 `typeof` 的行为上的错误，这个问题来自于 JavaScript 语言的早期，并为了兼容性而保留了下来。`null` 绝对不是一个 `object`。`null` 有自己的类型，它是一个特殊值。
+2. `typeof null` 的结果为 `"object"`。这是官方承认的 `typeof` 的错误，这个问题来自于 JavaScript 语言的早期阶段，并为了兼容性而保留了下来。`null` 绝对不是一个 `object`。`null` 有自己的类型，它是一个特殊值。`typeof` 的行为在这里是错误的。
 3. `typeof alert` 的结果是 `"function"`，因为 `alert` 在 JavaScript 语言中是一个函数。我们会在下一章学习函数，那时我们会了解到，在 JavaScript 语言中没有一个特别的 "function" 类型。函数隶属于 `object` 类型。但是 `typeof` 会对函数区分对待，并返回 `"function"`。这也是来自于 JavaScript 语言早期的问题。从技术上讲，这种行为是不正确的，但在实际编程中却非常方便。
+
+```smart header="`typeof(x)` 语法"
+你可能还会遇到另一种语法：`typeof(x)`。它与 `typeof x` 相同。
+
+简单点说：`typeof` 是一个操作符，不是一个函数。这里的括号不是 `typeof` 的一部分。它是数学运算分组的括号。
+
+通常，这样的括号里包含的是一个数学表达式，例如 `(2 + 2)`，但这里它只包含一个参数 `(x)`。从语法上讲，它们允许在 `typeof` 运算符和其参数之间不打空格，有些人喜欢这样的风格。
+
+有些人更喜欢用 `typeof(x)`，尽管 `typeof x` 语法更为常见。
+```
 
 ## 总结
 
-JavaScript 中有八种基本的数据类型（译注：前七种为基本数据类型，也称为原始类型，而 `object` 为复杂数据类型）。
+JavaScript 中有八种基本的数据类型。
 
-- `number` 用于任何类型的数字：整数或浮点数，在 <code>±(2<sup>53</sup>-1)</code> 范围内的整数。
-- `bigint` 用于任意长度的整数。
-- `string` 用于字符串：一个字符串可以包含 0 个或多个字符，所以没有单独的单字符类型。
-- `boolean` 用于 `true` 和 `false`。
-- `null` 用于未知的值 —— 只有一个 `null` 值的独立类型。
-- `undefined` 用于未定义的值 —— 只有一个 `undefined` 值的独立类型。
-- `symbol` 用于唯一的标识符。
-- `object` 用于更复杂的数据结构。
+- 七种原始数据类型（基本数据类型）：
+    - `number` 用于任何类型的数字：整数或浮点数，在 <code>±(2<sup>53</sup>-1)</code> 范围内的整数。
+    - `bigint` 用于任意长度的整数。
+    - `string` 用于字符串：一个字符串可以包含 0 个或多个字符，所以没有单独的单字符类型。
+    - `boolean` 用于 `true` 和 `false`。
+    - `null` 用于未知的值 —— 只有一个 `null` 值的独立类型。
+    - `undefined` 用于未定义的值 —— 只有一个 `undefined` 值的独立类型。
+    - `symbol` 用于唯一的标识符。
+- 以及一种非原始数据类型（复杂数据类型）：
+    - `object` 用于更复杂的数据结构。
 
 我们可以通过 `typeof` 运算符查看存储在变量中的数据类型。
 
-- 两种形式：`typeof x` 或者 `typeof(x)`。
+- 通常用作 `typeof x`，但 `typeof(x)` 也可行。
 - 以字符串的形式返回类型名称，例如 `"string"`。
 - `typeof null` 会返回 `"object"` —— 这是 JavaScript 编程语言的一个错误，实际上它并不是一个 `object`。
 

@@ -28,13 +28,13 @@
 |             | Map              | Object       |
 |-------------|------------------|--------------|
 | 调用语法     | `map.keys()`  | `Object.keys(obj)`，而不是 `obj.keys()` |
-| 返回值       | 可迭代项 | “真正的”数组   
+| 返回值       | 可迭代对象 | “真正的”数组   
 
 第一个区别是，对于对象我们使用的调用语法是 `Object.keys(obj)`，而不是 `obj.keys()`。
 
 为什么会这样？主要原因是灵活性。请记住，在 JavaScript 中，对象是所有复杂结构的基础。因此，我们可能有一个自己创建的对象，比如 `data`，并实现了它自己的 `data.values()` 方法。同时，我们依然可以对它调用 `Object.values(data)` 方法。
 
-第二个区别是 `Object.*` 方法返回的是“真正的”数组对象，而不只是一个可迭代项。这主要是历史原因。
+第二个区别是 `Object.*` 方法返回的是“真正的”数组对象，而不只是一个可迭代对象。这主要是历史原因。
 
 举个例子：
 
@@ -77,7 +77,7 @@ for (let value of Object.values(user)) {
 如果我们想应用它们，那么我们可以使用 `Object.entries`，然后使用 `Object.fromEntries`：
 
 1. 使用 `Object.entries(obj)` 从 `obj` 获取由键/值对组成的数组。
-2. 对该数组使用数组方法，例如 `map`。
+2. 对该数组使用数组方法，例如 `map`，对这些键/值对进行转换。
 3. 对结果数组使用 `Object.fromEntries(array)` 方法，将结果转回成对象。
 
 例如，我们有一个带有价格的对象，并想将它们加倍：
@@ -91,12 +91,13 @@ let prices = {
 
 *!*
 let doublePrices = Object.fromEntries(
-  // 转换为数组，之后使用 map 方法，然后通过 fromEntries 再转回到对象
-  Object.entries(prices).map(([key, value]) => [key, value * 2])
+  // 将价格转换为数组，将每个键/值对映射为另一对
+  // 然后通过 fromEntries 再将结果转换为对象
+  Object.entries(prices).map(entry => [entry[0], entry[1] * 2])
 );
 */!*
 
 alert(doublePrices.meat); // 8
-```   
+```
 
-乍一看，可能看起来很困难，但是使用一次或两次后，就很容易理解了。我们可以通过这种方式建立强大的转换链。
+乍一看，可能感觉有点困难，但是使用一两次之后就很容易理解了。我们可以通过这种方式建立强大的转换链。

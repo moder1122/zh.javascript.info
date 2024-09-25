@@ -1,7 +1,7 @@
 
 # Fetch：中止（Abort）
 
-正如我们所知道的，`fetch` 返回一个 promise。JavaScript 通常并没有“中止” promise 的概念。那么我们怎样才能取消一个正在执行的 `fetch` 呢？例如，如果用户在我们网站上的操作表明不再需要 `fetch`。
+正如我们所知道的，`fetch` 返回一个 promise。JavaScript 通常并没有“中止” promise 的概念。那么我们怎样才能取消一个正在执行的 `fetch` 呢？例如，如果用户在我们网站上的操作表明不再需要某个执行中的 `fetch`。
 
 为此有一个特殊的内建对象：`AbortController`。它不仅可以中止 `fetch`，还可以中止其他异步任务。
 
@@ -24,9 +24,9 @@ let controller = new AbortController();
 - `controller.signal` 就会触发 `abort` 事件。
 - `controller.signal.aborted` 属性变为 `true`。
 
-通常，处理分为两部分：
-1. 一部分是一个可取消的操作，它在 `controller.signal` 上设置一个监听器。
-2. 另一部分是取消：在需要的时候调用 `controller.abort()`。
+通常，我们需要处理两部分：
+1. 一部分是通过在 `controller.signal` 上添加一个监听器，来执行可取消操作。
+2. 另一部分是触发取消：在需要的时候调用 `controller.abort()`。
 
 这是完整的示例（目前还没有 `fetch`）：
 
@@ -34,7 +34,7 @@ let controller = new AbortController();
 let controller = new AbortController();
 let signal = controller.signal;
 
-// 可取消的操作这一部分
+// 执行可取消操作部分
 // 获取 "signal" 对象，
 // 并将监听器设置为在 controller.abort() 被调用时触发
 signal.addEventListener('abort', () => alert("abort!"));
@@ -48,9 +48,9 @@ alert(signal.aborted); // true
 
 正如我们所看到的，`AbortController` 只是在 `abort()` 被调用时传递 `abort` 事件的一种方式。
 
-我们可以自己在代码中实现相同类型的事件监听，而根本不需要 `AbortController` 对象。
+我们可以自己在代码中实现相同类型的事件监听，而不需要 `AbortController` 对象。
 
-但是有价值的是，`fetch` 知道如何与 `AbortController` 对象一起工作，它们俩是集成在一起的。
+但是有价值的是，`fetch` 知道如何与 `AbortController` 对象一起工作。它们是集成在一起的。
 
 ## 与 fetch 一起使用
 
@@ -97,7 +97,7 @@ try {
 
 ## AbortController 是可伸缩的
 
-`AbortController` 是可伸缩的，它允许一次取消多个 fetch。
+`AbortController` 是可伸缩的。它允许一次取消多个 fetch。
 
 这是一个代码草稿，该代码并行 fetch 很多 `urls`，并使用单个控制器将其全部中止：
 
@@ -113,8 +113,8 @@ let fetchJobs = urls.map(url => fetch(url, {
 
 let results = await Promise.all(fetchJobs);
 
-// 如果 controller.abort() 被从其他地方调用，
-// 它将中止所有 fetch
+// controller.abort() 被从任何地方调用，
+// 它都将中止所有 fetch
 ```
 
 如果我们有自己的与 `fetch` 不同的异步任务，我们可以使用单个 `AbortController` 中止这些任务以及 fetch。
@@ -137,8 +137,8 @@ let fetchJobs = urls.map(url => fetch(url, { // fetches
 // 等待完成我们的任务和所有 fetch
 let results = await Promise.all([...fetchJobs, ourJob]);
 
-// 如果 controller.abort() 被从其他地方调用，
-// 它将中止所有 fetch 和 ourJob
+// controller.abort() 被从任何地方调用，
+// 它都将中止所有 fetch 和 ourJob
 ```
 
 ## 总结

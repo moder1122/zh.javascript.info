@@ -103,7 +103,7 @@
 这个方法确实功能强大，因为可以使用任何 CSS 选择器。
 
 ```smart header="也可以使用伪类"
-CSS 选择器的伪类，例如 `:hover` 和 `:active` 也都是被支持的。例如，`document.querySelectorAll(':hover')` 将会返回鼠标指针现在已经结束的元素的集合（按嵌套顺序：从最外层 `<html>` 到嵌套最多的元素）。
+CSS 选择器的伪类，例如 `:hover` 和 `:active` 也都是被支持的。例如，`document.querySelectorAll(':hover')` 将会返回鼠标指针正处于其上方的元素的集合（按嵌套顺序：从最外层 `<html>` 到嵌套最多的元素）。
 ```
 
 ## querySelector [#querySelector]
@@ -116,7 +116,7 @@ CSS 选择器的伪类，例如 `:hover` 和 `:active` 也都是被支持的。�
 
 之前的方法是搜索 DOM。
 
-[elem.matches(css)](http://dom.spec.whatwg.org/#dom-element-matches) 不会查找任何内容，它只会检查 `elem` 是否与给定的 CSS 选择器匹配。它返回 `true` 或 `false`。
+[elem.matches(css)](https://dom.spec.whatwg.org/#dom-element-matches) 不会查找任何内容，它只会检查 `elem` 是否与给定的 CSS 选择器匹配。它返回 `true` 或 `false`。
 
 当我们遍历元素（例如数组或其他内容）并试图过滤那些我们感兴趣的元素时，这个方法会很有用。
 
@@ -154,7 +154,7 @@ CSS 选择器的伪类，例如 `:hover` 和 `:active` 也都是被支持的。�
 <div class="contents">
   <ul class="book">
     <li class="chapter">Chapter 1</li>
-    <li class="chapter">Chapter 1</li>
+    <li class="chapter">Chapter 2</li>
   </ul>
 </div>
 

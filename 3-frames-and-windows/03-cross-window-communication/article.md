@@ -57,7 +57,7 @@
       alert(e); // Security Error（另一个源）
     }
 
-    // 并且，我们也无法 **读取** iframe 中页面的 URL
+    // 并且，我们也无法读取 iframe 中页面的 URL
     try {
       // 无法从 location 对象中读取 URL
 *!*
@@ -67,7 +67,7 @@
       alert(e); // Security Error
     }
 
-    // ...我们可以 **写入** location（所以，在 iframe 中加载了其他内容）！
+    // ...我们可以写入 location（所以，在 iframe 中加载了其他内容）！
 *!*
     iframe.contentWindow.location = '/'; // OK
 */!*
@@ -115,6 +115,13 @@ document.domain = 'site.com';
 ```
 
 这样就可以了。现在它们可以无限制地进行交互了。但是再强调一遍，这仅适用于具有相同二级域的页面。
+
+```warn header="已弃用，但仍有效"
+`document.domain` 属性正在被从 [规范](https://html.spec.whatwg.org/multipage/origin.html#relaxing-the-same-origin-restriction) 中删除。跨窗口通信（下面将很快解释到）是建议的替代方案。
+
+也就是说，到目前为止，所有浏览器都支持它。并且未来也将继续支持它，而不会导致使用了 `document.domain` 的旧代码出现问题。
+```
+
 
 ## Iframe：错误文档陷阱
 

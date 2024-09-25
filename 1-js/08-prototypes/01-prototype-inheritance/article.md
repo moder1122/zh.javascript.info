@@ -12,7 +12,7 @@
 
 ![prototype](object-prototype-empty.svg)
 
-当我们从 `object` 中读取一个缺失的属性时，JavaScript 会自动从原型中获取该属性。在编程中，这种行为被称为“原型继承”。很快，我们将通过很多示例来学习此类继承，以及基于此类继承的更炫酷的语言功能。
+当我们从 `object` 中读取一个缺失的属性时，JavaScript 会自动从原型中获取该属性。在编程中，这被称为“原型继承”。很快，我们将通过很多示例来学习此类继承，以及基于此类继承的更炫酷的语言功能。
 
 属性 `[[Prototype]]` 是内部的而且是隐藏的，但是这儿有很多设置它的方式。
 
@@ -126,11 +126,10 @@ alert(longEar.jumps); // true（从 rabbit）
 
 这里只有两个限制：
 
-1. 引用不能形成闭环。如果我们试图在一个闭环中分配 `__proto__`，JavaScript 会抛出错误。
+1. 引用不能形成闭环。如果我们试图给 `__proto__` 赋值但会导致引用形成闭环时，JavaScript 会抛出错误。
 2. `__proto__` 的值可以是对象，也可以是 `null`。而其他的类型都会被忽略。
 
 当然，这可能很显而易见，但是仍然要强调：只能有一个 `[[Prototype]]`。一个对象不能从其他两个对象获得继承。
-
 
 ```smart header="`__proto__` 是 `[[Prototype]]` 的因历史原因而留下来的 getter/setter"
 初学者常犯一个普遍的错误，就是不知道 `__proto__` 和 `[[Prototype]]` 的区别。
@@ -150,7 +149,7 @@ alert(longEar.jumps); // true（从 rabbit）
 
 对于写入/删除操作可以直接在对象上进行。
 
-在下面的示例中，我们将为 `rabbit` 分配自己的 `walk`：
+在下面的示例中，我们将为 `rabbit` 的 `walk` 属性赋值：
 
 ```js run
 let animal = {
@@ -177,7 +176,7 @@ rabbit.walk(); // Rabbit! Bounce-bounce!
 
 ![](proto-animal-rabbit-walk-2.svg)
 
-访问器（accessor）属性是一个例外，因为分配（assignment）操作是由 setter 函数处理的。因此，写入此类属性实际上与调用函数相同。
+访问器（accessor）属性是一个例外，因为赋值（assignment）操作是由 setter 函数处理的。因此，写入此类属性实际上与调用函数相同。
 
 也就是这个原因，所以下面这段代码中的 `admin.fullName` 能够正常运行：
 
@@ -287,7 +286,7 @@ for(let prop in rabbit) alert(prop); // jumps，然后是 eats
 */!*
 ```
 
-如果这不是我们想要的，并且我们想排除继承的属性，那么这儿有一个内建方法 [obj.hasOwnProperty(key)](mdn:js/Object/hasOwnProperty)：如果 `obj` 具有自己的（非继承的）名为 `key` 的属性，则返回 `true`。
+如果这不是我们想要的，并且我们想排除继承的属性，那么这儿有一个内建方法 [obj.hasOwnProperty(key)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty)：如果 `obj` 具有自己的（非继承的）名为 `key` 的属性，则返回 `true`。
 
 因此，我们可以过滤掉继承的属性（或对它们进行其他操作）：
 

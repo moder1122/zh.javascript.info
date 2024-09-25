@@ -51,7 +51,7 @@ user.sayHi();
 
 当 `new User("John")` 被调用：
 1. 一个新对象被创建。
-2. `constructor` 使用给定的参数运行，并为其分配 `this.name`。
+2. `constructor` 使用给定的参数运行，并将其赋值给 `this.name`。
 
 ……然后我们就可以调用对象方法了，例如 `user.sayHi`。
 
@@ -110,7 +110,7 @@ alert(typeof User); // function
 alert(User === User.prototype.constructor); // true
 
 // 方法在 User.prototype 中，例如：
-alert(User.prototype.sayHi); // alert(this.name);
+alert(User.prototype.sayHi); // sayHi 方法的代码
 
 // 在原型中实际上有两个方法
 alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
@@ -118,7 +118,7 @@ alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
 
 ## 不仅仅是语法糖
 
-人们常说 `class` 是一个语法糖（旨在使内容更易阅读，但不引入任何新内容的语法），因为我们实际上可以在没有 `class` 的情况下声明相同的内容：
+人们常说 `class` 是一个语法糖（旨在使内容更易阅读，但不引入任何新内容的语法），因为我们实际上可以在不使用 `class` 的情况下声明相同的内容：
 
 ```js run
 // 用纯函数重写 class User
@@ -317,7 +317,7 @@ new User().sayHi(); // Hello, John!
 
 所以，我们就只需在表达式中写 "<property name> = <value>"，就这样。
 
-类字段重要的不同之处在于，它们会在每个独立对象中被设好，而不是设在 `User.prototype`：
+类字段的重要区别在于，它们会被挂在实例对象上，而非 `User.prototype` 上：
 
 ```js run
 class User {
@@ -423,6 +423,6 @@ class MyClass {
 }
 ```
 
-技术上来说，`MyClass` 是一个函数（我们提供作为 `constructor` 的那个），而 methods、getters 和 settors 都被写入了 `MyClass.prototype`。
+技术上来说，`MyClass` 是一个函数（我们提供作为 `constructor` 的那个），而 methods、getters 和 setters 都被写入了 `MyClass.prototype`。
 
 在下一章，我们将会进一步学习类的相关知识，包括继承和其他功能。

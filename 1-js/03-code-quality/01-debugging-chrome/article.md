@@ -38,7 +38,7 @@
 
 语句执行完毕之后，其执行结果会显示在下面。
 
-例如，`1+2` 将会返回 `3`，`hello("debugger")` 函数什么也不返回，因此结果是 `undefined`：
+例如，`1+2` 将会返回 `3`，而 `hello("debugger")` 函数调用什么也没返回，所以结果是 `undefined`：
 
 ![](chrome-sources-console.svg)
 
@@ -63,12 +63,12 @@
 - ……等等。
 
 ```smart header="条件断点"
-在行号上 **右键单击** 允许你创建一个 **条件** 断点。只有当给定的表达式为真（即满足条件）时才会被触发。
+在行号上 **右键单击** 允许你创建一个 **条件** 断点。只有当给定的表达式（你创建条件断点时提供的表达式）为真时才会被触发。
 
 当我们需要在特定的变量值或参数的情况下暂停程序执行时，这种调试方法就很有用了。
 ```
 
-## Debugger 命令
+## "debugger" 命令
 
 我们也可以使用 `debugger` 命令来暂停代码，像这样：
 
@@ -84,8 +84,7 @@ function hello(name) {
 }
 ```
 
-当我们在一个代码编辑器中并且不想切换到浏览器在开发者工具中查找脚本来设置断点时，这真的是非常方便。
-
+这样的命令只有在开发者工具打开时才有效，否则浏览器会忽略它。
 
 ## 暂停并查看
 
@@ -99,7 +98,7 @@ function hello(name) {
 
 1. **`察看（Watch）` —— 显示任意表达式的当前值。**
 
-    你可以点击加号 `+` 然后输入一个表达式。调试器将随时显示它的值，并在执行过程中自动重新计算该表达式。
+    你可以点击加号 `+` 然后输入一个表达式。调试器将显示它的值，并在执行过程中自动重新计算该表达式。
 
 2. **`调用栈（Call Stack）` —— 显示嵌套的调用链。**
 
@@ -129,17 +128,17 @@ function hello(name) {
 
     执行恢复了，执行到 `say()` 函数中的另外一个断点后暂停在了那里。看一下右边的 "Call stack"。它已经增加了一个调用信息。我们现在在 `say()` 里面。
 
-<span class="devtools" style="background-position:-200px -190px"></span> —— “下一步（Step）”：运行下一条指令，快捷键 `key:F9`。
+<span class="devtools" style="background-position:-200px -190px"></span> —— “下一步（Step）”：运行下一条（即当前行）指令，快捷键 `key:F9`。
 : 运行下一条语句。如果我们现在点击它，`alert` 会被显示出来。
 
     一次接一次地点击此按钮，整个脚本的所有语句会被逐个执行。
 
-<span class="devtools" style="background-position:-62px -192px"></span> —— “跨步（Step over）”：运行下一条指令，但 **不会进入到一个函数中**，快捷键 `key:F10`。
+<span class="devtools" style="background-position:-62px -192px"></span> —— “跨步（Step over）”：运行下一条（即当前行）指令，但 **不会进入到一个函数中**，快捷键 `key:F10`。
 : 跟上一条命令“下一步（Step）”类似，但如果下一条语句是函数调用则表现不同。这里的函数指的是：不是内建的如 `alert` 函数等，而是我们自己写的函数。
 
-    “下一步（Step）”命令进入函数内部并在第一行暂停执行，而“跨步（Step over）”在无形中执行函数调用，跳过了函数的内部。
+    如果我们对比一下，“下一步（Step）”命令会进入嵌套函数调用并在其第一行暂停执行，而“跨步（Step over）”对我们不可见地执行嵌套函数调用，跳过了函数内部。
 
-    执行会在该函数执行后立即暂停。
+    执行会在该函数调用后立即暂停。
 
     如果我们对该函数的内部执行不感兴趣，这命令会很有用。
 
@@ -149,13 +148,13 @@ function hello(name) {
     至于之后，只需要记住“下一步（Step）”命令会忽略异步行为，例如 `setTimeout`（计划的函数调用），它会过一段时间再执行。而“步入（Step into）”会进入到代码中并等待（如果需要）。详见 [DevTools 手册](https://developers.google.com/web/updates/2018/01/devtools#async)。
 
 <span class="devtools" style="background-position:-32px -194px"></span> —— “步出（Step out）”：继续执行到当前函数的末尾，快捷键 `key:Shift+F11`。
-: 继续执行代码并停止在当前函数的最后一行。当我们使用 <span class="devtools" style="background-position:-200px -190px"></span> 偶然地进入到一个嵌套调用，但是我们又对这个函数不感兴趣时，我们想要尽可能的继续执行到最后的时候是非常方便的。
+: 继续执行当前函数内的剩余代码，并暂停在调用当前函数的下一行代码处。当我们使用 <span class="devtools" style="background-position:-200px -190px"></span> 偶然地进入到一个嵌套调用，但是我们又对这个函数不感兴趣时，我们想要尽可能的继续执行到最后的时候是非常方便的。
 
 <span class="devtools" style="background-position:-61px -74px"></span> —— 启用/禁用所有的断点。
 : 这个按钮不会影响程序的执行。只是一个批量操作断点的开/关。
 
 <span class="devtools" style="background-position:-90px -146px"></span> —— 启用/禁用出现错误时自动暂停脚本执行。
-: 当启动此功能并且开发者工具是打开着的时候，任何一个脚本的错误都会导致该脚本执行自动暂停。然后我们可以分析变量来看一下什么出错了。因此如果我们的脚本因为错误挂掉的时候，我们可以打开调试器，启用这个选项然后重载页面，查看一下哪里导致它挂掉了和当时的上下文是什么。
+: 当启动此功能，如果开发者工具是打开着的时候，任何脚本执行错误都会导致该脚本执行自动暂停。然后我们可以在调试器中分析变量来看一下什么出错了。因此如果我们的脚本因为错误挂掉的时候，我们可以打开调试器，启用这个选项然后重载页面，查看一下哪里导致它挂掉了和当时的上下文是什么。
 
 ```smart header="Continue to here"
 在代码中的某一行上右键，在显示的关联菜单（context menu）中点击一个非常有用的名为 "Continue to here" 的选项。
@@ -183,11 +182,11 @@ for (let i = 0; i < 5; i++) {
 ## 总结
 
 我们可以看到，这里有 3 种方式来暂停一个脚本：
-1. 一个断点。
+1. 断点。
 2. `debugger` 语句。
-3. 一个错误（如果开发者工具是打开状态，并且按钮 <span class="devtools" style="background-position:-90px -146px"></span> 是开启的状态）。
+3. error（如果开发者工具是打开状态，并且按钮 <span class="devtools" style="background-position:-90px -146px"></span> 是开启的状态）。
 
-当脚本执行暂停时，我们就可以进行调试 —— 检查变量，跟踪代码来查看执行出错的位置。
+当脚本执行暂停时，我们就可以进行调试：检查变量，跟踪代码来查看执行出错的位置。
 
 开发人员工具中的选项比本文介绍的多得多。完整的手册请点击这个链接查看：<https://developers.google.com/web/tools/chrome-devtools>。
 

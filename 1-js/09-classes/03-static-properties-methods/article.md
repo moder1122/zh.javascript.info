@@ -1,9 +1,9 @@
 
 # 静态属性和静态方法
 
-我们可以把一个方法赋值给类的函数本身，而不是赋给它的 `"prototype"`。这样的方法被称为 **静态的（static）**。
+我们还可以为整个类分配一个方法。这样的方法被称为 **静态的（static）**。
 
-在一个类中，它们以 `static` 关键字开头，如下所示：
+在一个类的声明中，它们以 `static` 关键字开头，如下所示：
 
 ```js run
 class User {
@@ -31,9 +31,11 @@ User.staticMethod(); // true
 
 在 `User.staticMethod()` 调用中的 `this` 的值是类构造器 `User` 自身（“点符号前面的对象”规则）。
 
-通常，静态方法用于实现属于该类但不属于该类任何特定对象的函数。
+通常，静态方法用于实现属于整个类，但不属于该类任何特定对象的函数。
 
-例如，我们有对象 `Article`，并且需要一个方法来比较它们。一个自然的解决方案就是添加 `Article.compare` 方法，像下面这样：
+例如，我们有对象 `Article`，并且需要一个方法来比较它们。
+
+通常的解决方案就是添加 `Article.compare` 静态方法：
 
 ```js run
 class Article {
@@ -63,9 +65,11 @@ articles.sort(Article.compare);
 alert( articles[0].title ); // CSS
 ```
 
-这里 `Article.compare` 代表“上面的”文章，意思是比较它们。它不是文章的方法，而是整个 class 的方法。
+这里 `Article.compare` 方法代表“上面的”文章，意思是比较它们。它不是文章的方法，而是整个 class 的方法。
 
-另一个例子是所谓的“工厂”方法。想象一下，我们需要通过几种方法来创建一个文章：
+另一个例子是所谓的“工厂”方法。
+
+比如说，我们需要通过多种方式来创建一篇文章：
 
 1. 通过用给定的参数来创建（`title`，`date` 等）。
 2. 使用今天的日期来创建一个空的文章。
@@ -73,7 +77,7 @@ alert( articles[0].title ); // CSS
 
 第一种方法我们可以通过 constructor 来实现。对于第二种方式，我们可以创建类的一个静态方法来实现。
 
-就像这里的 `Article.createTodays()`：
+例如这里的 `Article.createTodays()`：
 
 ```js run
 class Article {
@@ -101,9 +105,20 @@ alert( article.title ); // Today's digest
 
 ```js
 // 假定 Article 是一个用来管理文章的特殊类
-// 静态方法用于移除文章：
+// 通过 id 来移除文章的静态方法：
 Article.remove({id: 12345});
 ```
+
+````warn header="静态方法不适用于单个对象"
+静态方法可以在类上调用，而不是在单个对象上。
+
+例如，这样的代码无法正常工作：
+
+```js
+// ...
+article.createTodays(); /// Error: article.createTodays is not a function
+```
+````
 
 ## 静态属性
 
@@ -125,7 +140,7 @@ alert( Article.publisher ); // Levi Ding
 Article.publisher = "Levi Ding";
 ```
 
-## 继承静态属性和方法
+## 继承静态属性和方法 [#statics-and-inheritance]
 
 静态属性和方法是可被继承的。
 
@@ -206,7 +221,7 @@ alert(Rabbit.prototype.__proto__ === Animal.prototype); // true
 
 举个例子， 一个用于进行比较的方法 `Article.compare(article1, article2)` 或一个工厂（factory）方法 `Article.createTodays()`。
 
-在类生命中，它们都被用关键字 `static` 进行了标记。
+在类声明中，它们都被用关键字 `static` 进行了标记。
 
 静态属性被用于当我们想要存储类级别的数据时，而不是绑定到实例。
 

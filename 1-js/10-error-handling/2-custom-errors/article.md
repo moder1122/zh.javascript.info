@@ -21,9 +21,9 @@ let json = `{ "name": "John", "age": 30 }`;
 
 我们的函数 `readUser(json)` 不仅会读取 JSON，还会检查（“验证”）数据。如果没有所必须的字段，或者（字段的）格式错误，那么就会出现一个 error。并且这些并不是 `SyntaxError`，因为这些数据在语法上是正确的，这些是另一种错误。我们称之为 `ValidationError`，并为之创建一个类。这种类型的错误也应该包含有关违规字段的信息。
 
-我们的 `ValidationError` 类应该继承自内建的 `Error` 类。
+我们的 `ValidationError` 类应该继承自 `Error` 类。
 
-`Error` 类是内建的，但这是其近似代码，所以我们可以了解我们要扩展的内容：
+`Error` 类是内建的，但我们可以通过下面这段近似代码理解我们要扩展的内容：
 
 ```js
 // JavaScript 自身定义的内建的 Error 类的“伪代码”
@@ -36,7 +36,7 @@ class Error {
 }
 ```
 
-现在让我们从其中继承 `ValidationError`，并尝试进行运行：
+现在让我们从其中继承 `ValidationError` 试一试：
 
 ```js run untrusted
 *!*
@@ -121,11 +121,11 @@ try {
 
 使用 `instanceof` 的版本要好得多，因为将来我们会对 `ValidationError` 进行扩展，创建它的子类型，例如 `PropertyRequiredError`。而 `instanceof` 检查对于新的继承类也适用。所以这是面向未来的做法。
 
-还有一点很重要，在 `catch` 遇到了未知的错误，它会在 `(**)` 行将该错误再次抛出。`catch` 块只知道如何处理 validation 错误和语法错误，而其他错误（由于代码中的错字或其他未知的错误）应该被扔出（fall through）。
+还有一点很重要，在 `catch` 遇到了未知的错误，它会在 `(**)` 行将该错误再次抛出。`catch` 块只知道如何处理 validation 错误和语法错误，而其他错误（由代码中的拼写错误或其他未知原因导致的）应该被扔出（fall through）。
 
 ## 深入继承
 
-`ValidationError` 类是非常通用的。很多东西都可能出错。对象的属性可能缺失或者属性可能有格式错误（例如 `age` 属性的值为一个字符串）。让我们针对缺少属性的错误来制作一个更具体的 `PropertyRequiredError` 类。它将携带有关缺少的属性的相关信息。
+`ValidationError` 类是非常通用的。很多东西都可能出错。对象的属性可能缺失或者属性可能有格式错误（例如 `age` 属性的值为一个字符串而不是数字）。让我们针对缺少属性的错误来制作一个更具体的 `PropertyRequiredError` 类。它将携带有关缺少的属性的相关信息。
 
 ```js run
 class ValidationError extends Error {
@@ -173,14 +173,14 @@ try {
   } else if (err instanceof SyntaxError) {
     alert("JSON Syntax Error: " + err.message);
   } else {
-    throw err; // 为止 error，将其再次抛出
+    throw err; // 未知 error，将其再次抛出
   }
 }
 ```
 
 这个新的类 `PropertyRequiredError` 使用起来很简单：我们只需要传递属性名：`new PropertyRequiredError(property)`。人类可读的 `message` 是由 constructor 生成的。
 
-请注意，在 `PropertyRequiredError` constructor 中的 `this.name` 是通过手动重新赋值的。这可能会变得有些乏味 — 在每个自定义 error 类中都要进行 `this.name = <class name>` 赋值操作。我们可以通过创建自己的“基础错误（basic error）”类来避免这种情况，该类进行了 `this.name = this.constructor.name` 赋值。然后让所有我们自定义的 error 都从这个“基础错误”类进行继承。
+请注意，在 `PropertyRequiredError` constructor 中的 `this.name` 是通过手动重新赋值的。这可能会变得有些乏味 —— 在每个自定义 error 类中都要进行 `this.name = <class name>` 赋值操作。我们可以通过创建自己的“基础错误（basic error）”类来避免这种情况，该类进行了 `this.name = this.constructor.name` 赋值。然后让所有我们自定义的 error 都从这个“基础错误”类进行继承。
 
 让我们称之为 `MyError`。
 
@@ -239,7 +239,7 @@ try {
 
 如果 `readUser` 函数会产生多种 error，那么我们应该问问自己：我们是否真的想每次都一一检查所有的 error 类型？
 
-通常答案是 "No"：我们希望能够“比它高一个级别”。我们只想知道这里是否是“数据读取异常” — 为什么发生了这样的 error 通常是无关紧要的（error 信息描述了它）。或者，如果我们有一种方法能够获取 error 的详细信息那就更好了，但前提是我们需要。
+通常答案是 "No"：我们希望能够“比它高一个级别”。我们只想知道这里是否是“数据读取异常” —— 为什么发生了这样的 error 通常是无关紧要的（error 信息描述了它）。或者，如果我们有一种方式能够获取 error 的详细信息那就更好了，但前提是我们需要。
 
 我们所描述的这项技术被称为“包装异常”。
 
@@ -317,7 +317,7 @@ try {
 }
 ```
 
-在上面的代码中，`readUser` 正如所描述的那样正常工作 — 捕获语法和验证（validation）错误，并抛出 `ReadError`（对于未知错误将照常再次抛出）。
+在上面的代码中，`readUser` 正如所描述的那样正常工作 —— 捕获语法和验证（validation）错误，并抛出 `ReadError`（对于未知错误将照常再次抛出）。
 
 所以外部代码检查 `instanceof ReadError`，并且它的确是。不必列出所有可能的 error 类型。
 
@@ -325,6 +325,6 @@ try {
 
 ## 总结
 
-- 我们可以正常地从 `Error` 和其他内建的 error 类中进行继承，。我们只需要注意 `name` 属性以及不要忘了调用 `super`。
+- 我们可以正常地从 `Error` 和其他内建的 error 类中进行继承。我们只需要注意 `name` 属性以及不要忘了调用 `super`。
 - 我们可以使用 `instanceof` 来检查特定的 error。但有时我们有来自第三方库的 error 对象，并且在这儿没有简单的方法来获取它的类。那么可以将 `name` 属性用于这一类的检查。
 - 包装异常是一项广泛应用的技术：用于处理低级别异常并创建高级别 error 而不是各种低级别 error 的函数。在上面的示例中，低级别异常有时会成为该对象的属性，例如 `err.cause`，但这不是严格要求的。

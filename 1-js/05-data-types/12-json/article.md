@@ -27,7 +27,7 @@ alert(user); // {name: "John", age: 30}
 
 ## JSON.stringify
 
-[JSON](http://en.wikipedia.org/wiki/JSON)（JavaScript Object Notation）是表示值和对象的通用格式。在 [RFC 4627](http://tools.ietf.org/html/rfc4627) 标准中有对其的描述。最初它是为 JavaScript 而创建的，但许多其他编程语言也有用于处理它的库。因此，当客户端使用 JavaScript 而服务器端是使用 Ruby/PHP/Java 等语言编写的时，使用 JSON 可以很容易地进行数据交换。
+[JSON](https://en.wikipedia.org/wiki/JSON)（JavaScript Object Notation）是表示值和对象的通用格式。在 [RFC 4627](https://tools.ietf.org/html/rfc4627) 标准中有对其的描述。最初它是为 JavaScript 而创建的，但许多其他编程语言也有用于处理它的库。因此，当客户端使用 JavaScript 而服务器端是使用 Ruby/PHP/Java 等语言编写的时，使用 JSON 可以很容易地进行数据交换。
 
 JavaScript 提供了如下方法：
 
@@ -41,7 +41,7 @@ let student = {
   age: 30,
   isAdmin: false,
   courses: ['html', 'css', 'js'],
-  wife: null
+  spouse: null
 };
 
 *!*
@@ -58,7 +58,7 @@ alert(json);
   "age": 30,
   "isAdmin": false,
   "courses": ["html", "css", "js"],
-  "wife": null
+  "spouse": null
 }
 */
 */!*
@@ -105,7 +105,7 @@ JSON 是语言无关的纯数据规范，因此一些特定于 JavaScript 的对
 即：
 
 - 函数属性（方法）。
-- Symbol 类型的属性。
+- Symbol 类型的键和值。
 - 存储 `undefined` 的属性。
 
 ```js run
@@ -138,7 +138,7 @@ let meetup = {
 };
 
 alert( JSON.stringify(meetup) );
-/* 整个解构都被字符串化了
+/* 整个结构都被字符串化了
 {
   "title":"Conference",
   "room":{"number":23,"participants":["john","ann"]},
@@ -188,7 +188,7 @@ replacer
 : 要编码的属性数组或映射函数 `function(key, value)`。
 
 space
-: 用于格式化的空格数量
+: 用于格式化的空格数量。
 
 大部分情况，`JSON.stringify` 仅与第一个参数一起使用。但是，如果我们需要微调替换过程，比如过滤掉循环引用，我们可以使用 `JSON.stringify` 的第二个参数。
 
@@ -246,7 +246,7 @@ alert( JSON.stringify(meetup, *!*['title', 'participants', 'place', 'name', 'num
 
 该函数会为每个 `(key,value)` 对调用并返回“已替换”的值，该值将替换原有的值。如果值被跳过了，则为 `undefined`。
 
-在我们的例子中，我们可以为 `occupiedBy` 以外的所有内容按原样返回 `value`。为了 `occupiedBy`，下面的代码返回 `undefined`：
+在我们的例子中，我们可以为 `occupiedBy` 以外的所有内容按原样返回 `value`。对于 `occupiedBy`，下面的代码返回 `undefined`：
 
 ```js run
 let room = {
@@ -276,6 +276,7 @@ name:         John
 name:         Alice
 place:        [object Object]
 number:       23
+occupiedBy: [object Object]
 */
 ```
 
@@ -327,6 +328,8 @@ alert(JSON.stringify(user, null, 2));
 }
 */
 ```
+
+第三个参数也可以是字符串。在这种情况下，字符串用于缩进，而不是空格的数量。
 
 `spaces` 参数仅用于日志记录和美化输出。
 
@@ -450,7 +453,7 @@ let json = `{
 
 还有另一种名为 [JSON5](http://json5.org/) 的格式，它允许未加引号的键，也允许注释等。但这是一个独立的库，不在语言的规范中。
 
-常规的 JSON 格式严格，并不是因为它的开发者很懒，而是为了实现简单，可靠且快速地实现解析算法。
+标准 JSON 格式之所以如此严格，并不是因为它的制定者们偷懒，而是为了能够简单，可靠且快速地实现解析算法。
 
 ## 使用 reviver
 

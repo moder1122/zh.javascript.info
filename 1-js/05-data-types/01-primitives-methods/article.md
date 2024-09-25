@@ -39,7 +39,7 @@ john.sayHi(); // Hi buddy!
 
 以下是 JavaScript 创建者面临的悖论：
 
-- 人们可能想对诸如字符串或数字之类的原始类型执行很多操作。最好将它们作为方法来访问。
+- 人们可能想对诸如字符串或数字之类的原始类型执行很多操作。最好使用方法来访问它们。
 - 原始类型必须尽可能的简单轻量。
 
 而解决方案看起来多少有点尴尬，如下：
@@ -48,7 +48,7 @@ john.sayHi(); // Hi buddy!
 2. JavaScript 允许访问字符串，数字，布尔值和 symbol 的方法和属性。
 3. 为了使它们起作用，创建了提供额外功能的特殊“对象包装器”，使用后即被销毁。
 
-“对象包装器”对于每种原始类型都是不同的，它们被称为 `String`、`Number`、`Boolean` 和 `Symbol`。因此，它们提供了不同的方法。
+“对象包装器”对于每种原始类型都是不同的，它们被称为 `String`、`Number`、`Boolean`、`Symbol` 和 `BigInt`。因此，它们提供了不同的方法。
 
 例如，字符串方法 [str.toUpperCase()](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) 返回一个大写化处理的字符串。
 
@@ -62,7 +62,7 @@ alert( str.toUpperCase() ); // HELLO
 
 很简单，对吧？以下是 `str.toUpperCase()` 中实际发生的情况：
 
-1. 字符串 `str` 是一个原始值。因此，在访问其属性时，会创建一个包含字符串字面值的特殊对象，并且具有有用的方法，例如 `toUpperCase()`。
+1. 字符串 `str` 是一个原始值。因此，在访问其属性时，会创建一个包含字符串字面值的特殊对象，并且具有可用的方法，例如 `toUpperCase()`。
 2. 该方法运行并返回一个新的字符串（由 `alert` 显示）。
 3. 特殊对象被销毁，只留下原始值 `str`。
 
@@ -94,7 +94,7 @@ alert( typeof 0 ); // "number"
 alert( typeof new Number(0) ); // "object"!
 ```
 
-对象在 `if` 中始终为真，因此此处的 alert 将显示：
+对象在 `if` 中始终为真，所以此处的 alert 将显示：
 
 ```js run
 let zero = new Number(0);
@@ -104,9 +104,10 @@ if (zero) { // zero 为 true，因为它是一个对象
 }
 ```
 
-另一方面，调用不带 `new`（关键字）的 `String/Number/Boolean` 函数是完全理智和有用的。它们将一个值转换为相应的类型：转成字符串、数字或布尔值（原始类型）。
+另一方面，调用不带 `new`（关键字）的 `String/Number/Boolean` 函数是可以的且有效的。它们将一个值转换为相应的类型：转成字符串、数字或布尔值（原始类型）。
 
 例如，下面完全是有效的：
+
 ```js
 let num = Number("123"); // 将字符串转成数字
 ```
